@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café URC Express | Universidad Rosario Castellanos</title>
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        :root {
+            --bg-base: #090e17;
+            --bg-surface: #111a2e;
+            --bg-card: rgba(19, 29, 51, 0.85);
+            --bg-glass: rgba(15, 23, 42, 0.75);
+            --border-subtle: rgba(148, 163, 184, 0.12);
+            --border-glow: rgba(245, 158, 11, 0.35);
+            
+            --amber: #f59e0b;
+            --amber-hover: #d97706;
+            --cyan: #06b6d4;
+            --blue: #3b82f6;
+            --emerald: #10b981;
+            --rose: #f43f5e;
+            --purple: #8b5cf6;
+
+            --text-title: #f8fafc;
+            --text-body: #cbd5e1;
+            --text-muted: #94a3b8;
+
+            --grad-accent: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+            --grad-mp: linear-gradient(135deg, #009ee3 0%, #007eb5 100%);
+            --grad-express: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --grad-card: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(245, 158, 11, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 85% 35%, rgba(6, 182, 212, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 90%, rgba(59, 130, 246, 0.06) 0%, transparent 50%);
+            color: var(--text-body);
+            min-height: 100vh;
+            padding-bottom: 5rem;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.85rem 1.5rem;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            background: var(--grad-accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #0f172a;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+        }
+
+        .brand-text h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-title);
+            line-height: 1.1;
+        }
+
+        .brand-text span {
+            font-size: 0.72rem;
+            color: var(--amber);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .role-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .role-pill strong {
+            color: var(--text-title);
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-title);
+            padding: 0.45rem 0.9rem;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--amber);
+        }
+
+        .cart-trigger {
+            background: var(--grad-accent);
+            color: #0f172a;
+            border: none;
+            padding: 0.5rem 1.1rem;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
+        }
+
+        .cart-trigger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(245, 158, 11, 0.5);
+        }
+
+        .cart-count {
+            background: #0f172a;
+            color: #fcd34d;
+            font-size: 0.75rem;
+            padding: 0.15rem 0.45rem;
+            border-radius: 9999px;
+            font-weight: 800;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* HERO & IMPACT DIAGNOSTIC BANNER */
+        .impact-banner {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 20px;
+            padding: 1.75rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .impact-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--grad-accent);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .impact-grid { grid-template-columns: 1fr; }
+        }
+
+        .impact-text h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-title);
+            margin-bottom: 0.5rem;
+        }
+
+        .impact-text p {
+            font-size: 0.92rem;
+            color: var(--text-body);
+            line-height: 1.5;
+        }
+
+        .impact-metric {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .metric-comparison {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .metric-old {
+            font-size: 1.1rem;
+            color: var(--rose);
+            text-decoration: line-through;
+            font-weight: 600;
+        }
+
+        .metric-arrow {
+            color: var(--amber);
+            font-size: 1.2rem;
+        }
+
+        .metric-new {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--emerald);
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        /* ROLE DEMO SWITCHER */
+        .demo-bar {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .demo-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-body);
+            padding: 0.35rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .demo-btn:hover, .demo-btn.active {
+            background: var(--amber);
+            color: #0f172a;
+            border-color: var(--amber);
+        }
+
+        /* ROUTING TABS & CATEGORIES */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-title);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-body);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .tab-btn.active {
+            background: var(--grad-accent);
+            color: #0f172a;
+            border-color: transparent;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .tab-btn.tab-express.active {
+            background: var(--grad-express);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+        }
+
+        /* PRODUCTS GRID */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            backdrop-filter: blur(8px);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-glow);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 0.85rem;
+        }
+
+        .product-icon {
+            font-size: 2.25rem;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .routing-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .badge-express {
+            background: rgba(6, 182, 212, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .badge-cocina {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .product-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-title);
+            margin-bottom: 0.35rem;
+            line-height: 1.3;
+        }
+
+        .product-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        .time-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 6px;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 0.85rem;
+        }
+
+        .card-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 0.85rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .product-price {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-title);
+        }
+
+        .product-price span {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--amber);
+        }
+
+        .btn-add {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fcd34d;
+            padding: 0.45rem 0.9rem;
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .btn-add:hover {
+            background: var(--amber);
+            color: #0f172a;
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+        }
+
+        /* LIVE ORDER TRACKER SECTION */
+        {% if pedidos_recientes %}
+        .tracker-section {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.08) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            padding: 1.75rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .tracker-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .orders-slider {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .tracker-card {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 1.25rem;
+            position: relative;
+        }
+
+        .tracker-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .order-tag {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--amber);
+        }
+
+        .pin-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 0.95rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 8px;
+            letter-spacing: 0.05em;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+        }
+
+        .state-stepper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .state-stepper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            right: 10px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .step-item {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .step-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #1e293b;
+            border: 2px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .step-item.active .step-circle {
+            background: var(--amber);
+            border-color: #fcd34d;
+            color: #0f172a;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+        }
+
+        .step-item.completed .step-circle {
+            background: var(--emerald);
+            border-color: #6ee7b7;
+            color: #ffffff;
+        }
+
+        .step-text {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .step-item.active .step-text {
+            color: var(--amber);
+            font-weight: 700;
+        }
+        {% endif %}
+
+        /* MODAL CUSTOMIZATION */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 15, 26, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-card {
+            background: #131d33;
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            padding: 1.75rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            animation: modalIn 0.2s ease-out;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.85rem 0 1.25rem;
+        }
+
+        .custom-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-body);
+            padding: 0.4rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .custom-chip.selected {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--amber);
+            color: #fcd34d;
+            font-weight: 600;
+        }
+
+        /* OFFCANVAS CART */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            max-width: 90vw;
+            height: 100vh;
+            background: #111a2e;
+            border-left: 1px solid var(--border-subtle);
+            box-shadow: -15px 0 35px rgba(0, 0, 0, 0.6);
+            z-index: 250;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .cart-item {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .item-info h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-title);
+        }
+
+        .item-notes {
+            font-size: 0.75rem;
+            color: var(--amber);
+            margin-top: 0.2rem;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .qty-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffffff;
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .cart-footer {
+            padding: 1.25rem 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .cart-total-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .btn-mp-checkout {
+            width: 100%;
+            background: var(--grad-mp);
+            border: none;
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            padding: 0.85rem;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            box-shadow: 0 4px 14px rgba(0, 158, 227, 0.4);
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-mp-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 158, 227, 0.6);
+        }
+
+        /* CHECKOUT MODAL MERCADO PAGO */
+        .mp-modal {
+            max-width: 480px;
+        }
+
+        .mp-banner {
+            background: #009ee3;
+            color: #ffffff;
+            padding: 0.75rem 1.25rem;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .mp-logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .qr-box {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 1.25rem;
+            text-align: center;
+            margin: 1rem 0;
+            color: #0f172a;
+        }
+
+        .qr-placeholder {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 0.75rem;
+            background: #f1f5f9;
+            border: 2px dashed #94a3b8;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: #475569;
+        }
+
+        .qr-placeholder i {
+            font-size: 3rem;
+            color: #009ee3;
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .pay-option {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pay-option:hover, .pay-option.selected {
+            background: rgba(0, 158, 227, 0.15);
+            border-color: #009ee3;
+        }
+
+        .pay-option input {
+            accent-color: #009ee3;
+        }
+
+        .btn-zero-touch {
+            background: var(--emerald);
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 0.85rem;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-zero-touch:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="{% url 'menu_cliente' %}" class="brand-box">
+            <div class="brand-logo">
+                <i class="bi bi-cup-hot-fill"></i>
+            </div>
+            <div class="brand-text">
+                <h1>Café URC Express</h1>
+                <span>Universidad Rosario Castellanos</span>
+            </div>
+        </a>
+
+        <div class="nav-actions">
+            {% if request.user.is_authenticated %}
+            <div class="role-pill">
+                <i class="bi bi-person-circle"></i>
+                <span>{{ request.user.username }}</span>
+                <strong>({{ user_role }})</strong>
+            </div>
+            <a href="{% url 'logout' %}" class="nav-btn">
+                <i class="bi bi-box-arrow-right"></i> Salir
+            </a>
+            {% else %}
+            <a href="{% url 'login' %}" class="nav-btn">
+                <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+            </a>
+            {% endif %}
+
+            <button class="cart-trigger" onclick="toggleCart()">
+                <i class="bi bi-bag-check-fill"></i>
+                <span>Mi Orden</span>
+                <span class="cart-count" id="navCartCount">0</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- DEMO ROLE SWITCHER -->
+    <div class="demo-bar">
+        <div class="demo-label">
+            <i class="bi bi-person-badge-fill"></i> Alternador de Perspectiva (Demostración de Roles URC):
+        </div>
+        <div class="demo-buttons">
+            <a href="{% url 'cambiar_rol_demo' 'cliente' %}" class="demo-btn {% if user_role == 'cliente' %}active{% endif %}">
+                👨‍🎓 Estudiante (PWA Anticolas)
+            </a>
+            <a href="{% url 'modulo_cajero' %}" class="demo-btn {% if user_role == 'cajero' %}active{% endif %}">
+                💼 Cajero (Punto de Venta POS)
+            </a>
+            <a href="{% url 'pantalla_kds' %}" class="demo-btn">
+                🍳 Pantalla KDS Cocina & Routing
+            </a>
+            <a href="{% url 'admin_dashboard' %}" class="demo-btn {% if user_role == 'admin' %}active{% endif %}">
+                👑 Admin General & Auditoría
+            </a>
+        </div>
+    </div>
+
+    <!-- IMPACT DIAGNOSTIC BANNER -->
+    <div class="impact-banner">
+        <div class="impact-grid">
+            <div class="impact-text">
+                <h2>Elimina las Filas en Recesos Escolares</h2>
+                <p>
+                    Plataforma PWA que desacopla la toma de orden y cobro anticipado vía <strong>Mercado Pago</strong> de la preparación física.
+                    Los pedidos <em>'Grab & Go'</em> se arman en menos de 30 segundos en mostrador express, mientras la cocina caliente elabora comandas bajo pantalla KDS.
+                </p>
+            </div>
+            <div class="impact-metric">
+                <div class="metric-comparison">
+                    <span class="metric-old">14 min</span>
+                    <span class="metric-arrow"><i class="bi bi-arrow-right-short"></i></span>
+                    <span class="metric-new">&lt; 45 seg</span>
+                </div>
+                <div class="metric-label">Tiempo promedio de retiro en barra</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIVE TRACKER (SI EXISTEN PEDIDOS ACTIVOS) -->
+    {% if pedidos_recientes %}
+    <div class="tracker-section" id="trackerSection">
+        <div class="tracker-header">
+            <div class="section-title">
+                <i class="bi bi-broadcast text-emerald"></i> Seguimiento de Comandas en Vivo
+            </div>
+            <div class="text-muted" style="font-size: 0.8rem;">
+                <i class="bi bi-shield-check"></i> Presenta tu código PIN en barra al escuchar tu turno
+            </div>
+        </div>
+
+        <div class="orders-slider">
+            {% for ped in pedidos_recientes %}
+            <div class="tracker-card" id="cardOrder-{{ ped.id }}">
+                <div class="tracker-top">
+                    <div>
+                        <div class="order-tag">{{ ped.order_number }}</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">
+                            {{ ped.tipo_despacho }} • {{ ped.creado_en|date:"H:i" }} hrs
+                        </div>
+                    </div>
+                    <div class="pin-badge">
+                        <i class="bi bi-key-fill"></i> {{ ped.codigo_pin }}
+                    </div>
+                </div>
+
+                <!-- STATE STEPPER -->
+                <div class="state-stepper">
+                    <div class="step-item {% if ped.estado in 'PAID,IN_PREPARATION,READY_FOR_PICKUP,DELIVERED' %}completed{% endif %}">
+                        <div class="step-circle"><i class="bi bi-check-lg"></i></div>
+                        <span class="step-text">Pagado</span>
+                    </div>
+                    <div class="step-item {% if ped.estado == 'IN_PREPARATION' %}active{% elif ped.estado in 'READY_FOR_PICKUP,DELIVERED' %}completed{% endif %}">
+                        <div class="step-circle"><i class="bi bi-fire"></i></div>
+                        <span class="step-text">En Cocina</span>
+                    </div>
+                    <div class="step-item {% if ped.estado == 'READY_FOR_PICKUP' %}active{% elif ped.estado == 'DELIVERED' %}completed{% endif %}">
+                        <div class="step-circle"><i class="bi bi-bell-fill"></i></div>
+                        <span class="step-text">¡Listo!</span>
+                    </div>
+                    <div class="step-item {% if ped.estado == 'DELIVERED' %}completed{% endif %}">
+                        <div class="step-circle"><i class="bi bi-bag-check-fill"></i></div>
+                        <span class="step-text">Entregado</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; margin-top: 0.5rem;">
+                    <span>Total: <strong>${{ ped.total }} MXN</strong></span>
+                    <span style="color: var(--amber); font-weight: 600;">
+                        <i class="bi bi-clock"></i> Est. {{ ped.tiempo_espera_estimado }} min
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- MENU & ROUTING FILTER -->
+    <div class="section-header">
+        <div class="section-title">
+            <i class="bi bi-grid-fill text-amber"></i> Catálogo de Menú y Despacho Segregado
+        </div>
+        <div class="filter-tabs">
+            <button class="tab-btn active" onclick="filtrarProductos('todos', this)">
+                <i class="bi bi-stars"></i> Todos los Ítems
+            </button>
+            <button class="tab-btn tab-express" onclick="filtrarProductos('express', this)">
+                <i class="bi bi-lightning-charge-fill"></i> Grab & Go (&lt; 30s)
+            </button>
+            <button class="tab-btn" onclick="filtrarProductos('cocina', this)">
+                <i class="bi bi-fire"></i> Cocina Caliente / Plancha
+            </button>
+        </div>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div class="products-grid" id="productsGrid">
+        {% for p in productos %}
+        <div class="product-card" data-area="{{ p.area_despacho|lower }}" data-grab="{{ p.es_grab_and_go }}">
+            <div>
+                <div class="card-top">
+                    <div class="product-icon">
+                        {{ p.imagen_url|default:"🥪" }}
+                    </div>
+                    {% if p.es_grab_and_go %}
+                    <span class="routing-badge badge-express">
+                        <i class="bi bi-lightning-fill"></i> Grab & Go
+                    </span>
+                    {% else %}
+                    <span class="routing-badge badge-cocina">
+                        <i class="bi bi-fire"></i> Plancha / Cocina
+                    </span>
+                    {% endif %}
+                </div>
+
+                <h3 class="product-name">{{ p.nombre }}</h3>
+                <div class="time-pill">
+                    <i class="bi bi-stopwatch"></i> Prep: {{ p.tiempo_prep_min }}
+                </div>
+                <p class="product-desc">{{ p.descripcion }}</p>
+            </div>
+
+            <div class="card-bottom">
+                <div class="product-price">
+                    ${{ p.precio_venta|floatformat:2 }} <span>MXN</span>
+                </div>
+                <button class="btn-add" onclick="abrirModalPersonalizar('{{ p.id }}')">
+                    <i class="bi bi-plus-circle-fill"></i> Agregar
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!-- MODAL PERSONALIZAR PRODUCTO -->
+<div class="modal-overlay" id="modalPersonalizar">
+    <div class="modal-card">
+        <div class="modal-header">
+            <div>
+                <h3 id="modalProdNombre" style="font-family: 'Outfit'; color: var(--text-title); font-size: 1.25rem;">Personalizar Orden</h3>
+                <span id="modalProdPrecio" style="color: var(--amber); font-weight: 700; font-size: 0.95rem;"></span>
+            </div>
+            <button class="modal-close" onclick="cerrarModalPersonalizar()">&times;</button>
+        </div>
+
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+            Especificaciones para cocina o barra (ej. 'Bien dorada, con rajas'):
+        </p>
+
+        <div class="chips-container" id="modalChips">
+            <!-- Chips dinámicos -->
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+            <label style="display:block; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text-body);">
+                Instrucciones Adicionales del Alumno:
+            </label>
+            <input type="text" id="modalNotasLibres" placeholder="ej. Salsa aparte, sin cebolla..." 
+                   style="width: 100%; background: #0f172a; border: 1px solid var(--border-subtle); padding: 0.65rem 0.85rem; border-radius: 10px; color: #fff; font-size: 0.88rem;">
+        </div>
+
+        <div style="display: flex; gap: 0.75rem;">
+            <button onclick="confirmarAgregarAlCarrito()" class="btn-mp-checkout" style="background: var(--grad-accent); color: #0f172a;">
+                <i class="bi bi-check2-circle"></i> Confirmar al Carrito
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- OFFCANVAS CARRITO -->
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <i class="bi bi-bag-heart-fill text-amber" style="font-size: 1.3rem;"></i>
+            <h3 style="font-family: 'Outfit'; font-size: 1.2rem; color: var(--text-title);">Mi Pedido URC</h3>
+        </div>
+        <button class="modal-close" onclick="toggleCart()">&times;</button>
+    </div>
+
+    <div class="cart-items" id="cartItemsContainer">
+        <!-- Renderizado dinámico -->
+    </div>
+
+    <div class="cart-footer">
+        <div class="cart-total-row">
+            <span style="color: var(--text-muted); font-size: 0.9rem;">Total a Pagar:</span>
+            <span id="cartTotalMonto" style="font-family: 'Outfit'; font-size: 1.6rem; font-weight: 800; color: #ffffff;">$0.00</span>
+        </div>
+        <button class="btn-mp-checkout" onclick="abrirModalMercadoPago()">
+            <i class="bi bi-qr-code-scan"></i> Pagar con Mercado Pago
+        </button>
+    </div>
+</div>
+
+<!-- MODAL MERCADO PAGO SIMULATOR -->
+<div class="modal-overlay" id="modalMP">
+    <div class="modal-card mp-modal">
+        <div class="modal-header">
+            <div class="mp-logo">
+                <i class="bi bi-wallet-fill"></i> Mercado Pago
+            </div>
+            <button class="modal-close" onclick="cerrarModalMP()">&times;</button>
+        </div>
+
+        <div class="mp-banner">
+            <div>
+                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Cafetería URC Express</div>
+                <div id="mpModalTotal" style="font-size: 1.4rem; font-weight: 800;">$0.00 MXN</div>
+            </div>
+            <div style="text-align: right; font-size: 0.75rem;">
+                <div>Cobro Digital</div>
+                <strong>Sin Comisión</strong>
+            </div>
+        </div>
+
+        <!-- MÉTODOS DE PAGO -->
+        <div class="payment-options">
+            <label class="pay-option selected">
+                <input type="radio" name="metodo_pago" value="QR_MERCADOPAGO" checked>
+                <i class="bi bi-qr-code" style="font-size: 1.3rem; color: #009ee3;"></i>
+                <div>
+                    <strong style="display:block; font-size: 0.88rem; color:#fff;">Escanear Código QR en Mesa/Barra</strong>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);">Pago con app Mercado Pago</span>
+                </div>
+            </label>
+
+            <label class="pay-option">
+                <input type="radio" name="metodo_pago" value="SALDO_CUENTA">
+                <i class="bi bi-credit-card-2-front" style="font-size: 1.3rem; color: #10b981;"></i>
+                <div>
+                    <strong style="display:block; font-size: 0.88rem; color:#fff;">Saldo en Cuenta Mercado Pago</strong>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);">Débito instantáneo 1-clic</span>
+                </div>
+            </label>
+
+            <label class="pay-option">
+                <input type="radio" name="metodo_pago" value="TARJETA_DEBITO_CREDITO">
+                <i class="bi bi-credit-card" style="font-size: 1.3rem; color: #f59e0b;"></i>
+                <div>
+                    <strong style="display:block; font-size: 0.88rem; color:#fff;">Tarjeta de Débito / Crédito</strong>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);">Visa, Mastercard, Carnet</span>
+                </div>
+            </label>
+        </div>
+
+        <!-- QR BOX DINÁMICO -->
+        <div class="qr-box">
+            <div class="qr-placeholder">
+                <i class="bi bi-qr-code-scan"></i>
+                <span>Escanea desde tu app URC / Mercado Pago</span>
+            </div>
+            <div style="font-size: 0.75rem; color: #64748b; font-weight: 600;">
+                Turno en cola y código PIN asignados tras autorizar
+            </div>
+        </div>
+
+        <!-- BOTÓN AUTOMATIZACIÓN ZERO-TOUCH -->
+        <button class="btn-zero-touch" onclick="ejecutarPagoZeroTouch()">
+            <i class="bi bi-check-circle-fill"></i> Simular Autorización y Disparar Webhook
+        </button>
+    </div>
+</div>
+
+<script>
+    // DATA SOURCE
+    const PRODUCTOS_CATALOGO = {{ productos_json|safe }};
+    let carrito = [];
+    let productoSeleccionado = null;
+    let opcionesElegidas = [];
+
+    // TOGGLE CART OFFCANVAS
+    function toggleCart() {
+        const sidebar = document.getElementById('cartSidebar');
+        sidebar.classList.toggle('open');
+    }
+
+    // FILTER TABS
+    function filtrarProductos(tipo, btn) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const cards = document.querySelectorAll('.product-card');
+        cards.forEach(card => {
+            const esGrab = card.getAttribute('data-grab') === 'True' || card.getAttribute('data-grab') === 'true';
+            const area = card.getAttribute('data-area');
+
+            if (tipo === 'todos') {
+                card.style.display = 'flex';
+            } else if (tipo === 'express') {
+                card.style.display = esGrab ? 'flex' : 'none';
+            } else if (tipo === 'cocina') {
+                card.style.display = (area === 'cocina') ? 'flex' : 'none';
+            }
+        });
+    }
+
+    // MODAL PERSONALIZAR
+    function abrirModalPersonalizar(prodId) {
+        productoSeleccionado = PRODUCTOS_CATALOGO.find(p => p.id === prodId);
+        if (!productoSeleccionado) return;
+
+        opcionesElegidas = [];
+        document.getElementById('modalProdNombre').innerText = productoSeleccionado.nombre;
+        document.getElementById('modalProdPrecio').innerText = `$${productoSeleccionado.precio_venta.toFixed(2)} MXN`;
+        document.getElementById('modalNotasLibres').value = '';
+
+        const chipsCont = document.getElementById('modalChips');
+        chipsCont.innerHTML = '';
+
+        if (productoSeleccionado.opciones && productoSeleccionado.opciones.length > 0) {
+            productoSeleccionado.opciones.forEach(opt => {
+                const chip = document.createElement('div');
+                chip.className = 'custom-chip';
+                chip.innerText = opt;
+                chip.onclick = function() {
+                    chip.classList.toggle('selected');
+                    if (chip.classList.contains('selected')) {
+                        opcionesElegidas.push(opt);
+                    } else {
+                        opcionesElegidas = opcionesElegidas.filter(o => o !== opt);
+                    }
+                };
+                chipsCont.appendChild(chip);
+            });
+        } else {
+            chipsCont.innerHTML = '<span style="font-size:0.78rem; color:var(--text-muted);">Sin opciones predefinidas. Despacho directo Grab & Go.</span>';
+        }
+
+        document.getElementById('modalPersonalizar').style.display = 'flex';
+    }
+
+    function cerrarModalPersonalizar() {
+        document.getElementById('modalPersonalizar').style.display = 'none';
+        productoSeleccionado = null;
+    }
+
+    function confirmarAgregarAlCarrito() {
+        if (!productoSeleccionado) return;
+
+        const notasLibres = document.getElementById('modalNotasLibres').value.trim();
+        let todasNotas = [...opcionesElegidas];
+        if (notasLibres) todasNotas.push(notasLibres);
+        const notasFinales = todasNotas.join(', ');
+
+        const itemExistente = carrito.find(it => it.id === productoSeleccionado.id && it.notas === notasFinales);
+        if (itemExistente) {
+            itemExistente.cantidad += 1;
+        } else {
+            carrito.push({
+                id: productoSeleccionado.id,
+                nombre: productoSeleccionado.nombre,
+                precio: productoSeleccionado.precio_venta,
+                area: productoSeleccionado.area_despacho,
+                cantidad: 1,
+                notas: notasFinales
+            });
+        }
+
+        cerrarModalPersonalizar();
+        renderizarCarrito();
+        toggleCart();
+    }
+
+    // RENDER CART
+    function renderizarCarrito() {
+        const cont = document.getElementById('cartItemsContainer');
+        cont.innerHTML = '';
+        let total = 0;
+        let count = 0;
+
+        if (carrito.length === 0) {
+            cont.innerHTML = `
+                <div style="text-align: center; color: var(--text-muted); margin-top: 3rem;">
+                    <i class="bi bi-bag-x" style="font-size: 2.5rem; display: block; margin-bottom: 0.5rem;"></i>
+                    Tu orden está vacía.<br>Selecciona productos del menú.
+                </div>
+            `;
+        } else {
+            carrito.forEach((it, idx) => {
+                const sub = it.precio * it.cantidad;
+                total += sub;
+                count += it.cantidad;
+
+                const el = document.createElement('div');
+                el.className = 'cart-item';
+                el.innerHTML = `
+                    <div class="item-info">
+                        <h4>${it.nombre}</h4>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">$${it.precio.toFixed(2)} c/u</div>
+                        ${it.notas ? `<div class="item-notes"><i class="bi bi-chat-dots"></i> ${it.notas}</div>` : ''}
+                    </div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="cambiarCantidad(${idx}, -1)">-</button>
+                        <span style="font-weight: 700; font-size: 0.9rem;">${it.cantidad}</span>
+                        <button class="qty-btn" onclick="cambiarCantidad(${idx}, 1)">+</button>
+                    </div>
+                `;
+                cont.appendChild(el);
+            });
+        }
+
+        document.getElementById('cartTotalMonto').innerText = `$${total.toFixed(2)}`;
+        document.getElementById('navCartCount').innerText = count;
+    }
+
+    function cambiarCantidad(idx, delta) {
+        carrito[idx].cantidad += delta;
+        if (carrito[idx].cantidad <= 0) {
+            carrito.splice(idx, 1);
+        }
+        renderizarCarrito();
+    }
+
+    // MODAL MERCADO PAGO
+    function abrirModalMercadoPago() {
+        if (carrito.length === 0) {
+            alert('Agrega al menos un producto a tu orden.');
+            return;
+        }
+        let total = carrito.reduce((acc, it) => acc + (it.precio * it.cantidad), 0);
+        document.getElementById('mpModalTotal').innerText = `$${total.toFixed(2)} MXN`;
+        document.getElementById('modalMP').style.display = 'flex';
+    }
+
+    function cerrarModalMP() {
+        document.getElementById('modalMP').style.display = 'none';
+    }
+
+    // AUTOMATIZACIÓN ZERO-TOUCH: CREAR PEDIDO + DISPARAR WEBHOOK ASÍNCRONO
+    async function ejecutarPagoZeroTouch() {
+        const metodo = document.querySelector('input[name="metodo_pago"]:checked').value;
+        const btn = document.querySelector('.btn-zero-touch');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="bi bi-arrow-repeat spin"></i> Procesando pago con Mercado Pago...`;
+
+        try {
+            // 1. Crear Orden en Backend
+            const res1 = await fetch("{% url 'api_crear_pedido_cliente' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    items: carrito,
+                    metodo_pago: metodo,
+                    nombre_cliente: "{{ request.user.get_full_name|default:request.user.username|default:'Estudiante URC' }}"
+                })
+            });
+
+            const data1 = await res1.json();
+            if (!data1.success) {
+                alert('Error al generar la orden: ' + data1.error);
+                btn.disabled = false;
+                btn.innerHTML = `<i class="bi bi-check-circle-fill"></i> Simular Autorización y Disparar Webhook`;
+                return;
+            }
+
+            const pedidoCreado = data1.pedido;
+
+            // 2. Disparar Webhook Zero-Touch asíncrono
+            const res2 = await fetch("{% url 'api_webhook_mercadopago' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    order_id: pedidoCreado.order_id,
+                    mp_payment_id: pedidoCreado.mp_payment_id,
+                    status: 'approved'
+                })
+            });
+
+            const data2 = await res2.json();
+
+            // Limpiar carrito y cerrar modal
+            carrito = [];
+            renderizarCarrito();
+            cerrarModalMP();
+            toggleCart();
+
+            // Alerta visual de éxito y refrescar para mostrar tarjeta de turno y PIN
+            alert(`🎉 ¡Pago Aprobado con Mercado Pago!\n\nTurno Asignado: ${data2.order_number}\nCódigo PIN de Retiro: ${data2.codigo_pin}\nTipo de Despacho: ${data2.tipo_despacho}\n\nPresenta tu PIN en barra cuando tu turno esté ¡Listo!`);
+            window.location.reload();
+
+        } catch (err) {
+            alert('Error de conexión con la pasarela: ' + err);
+            btn.disabled = false;
+            btn.innerHTML = `<i class="bi bi-check-circle-fill"></i> Simular Autorización y Disparar Webhook`;
+        }
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+</body>
+</html>

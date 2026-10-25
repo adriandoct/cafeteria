@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión | Café URC Express</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --bg-base: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.85);
+            --border-subtle: rgba(148, 163, 184, 0.15);
+            --border-glow: rgba(245, 158, 11, 0.4);
+            --primary: #f59e0b;
+            --primary-dark: #d97706;
+            --secondary: #0ea5e9;
+            --emerald: #10b981;
+            --text-title: #f8fafc;
+            --text-body: #cbd5e1;
+            --text-muted: #94a3b8;
+            --grad-accent: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+            --grad-urc: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.12) 0%, transparent 40%);
+            color: var(--text-body);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(16px);
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #fcd34d;
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text-title);
+            margin-bottom: 0.35rem;
+        }
+
+        .login-header p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            padding: 0.85rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-body);
+            margin-bottom: 0.45rem;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: var(--text-title);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--grad-accent);
+            border: none;
+            border-radius: 12px;
+            padding: 0.85rem 1.25rem;
+            color: #0f172a;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+            margin-top: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .roles-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 1.75rem 0 1.25rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .roles-divider::before, .roles-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .roles-divider span {
+            padding: 0 0.75rem;
+        }
+
+        .quick-roles {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .role-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-title);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .role-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(245, 158, 11, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .role-btn .role-icon {
+            font-size: 1.25rem;
+            margin-right: 0.75rem;
+        }
+
+        .role-btn .role-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .role-btn .role-title {
+            font-weight: 700;
+            display: block;
+        }
+
+        .role-btn .role-desc {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .role-btn .role-badge {
+            background: rgba(14, 165, 233, 0.15);
+            color: #38bdf8;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .footer-note a {
+            color: #f59e0b;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <div class="login-header">
+        <div class="brand-badge">
+            <i class="bi bi-cup-hot-fill"></i> URC SISTEMAS Y TECNOLOGÍA
+        </div>
+        <h1>Café URC Express</h1>
+        <p>Sistema Automatizado de Atención y Punto de Venta (POS/KDS)</p>
+    </div>
+
+    {% if error_msg %}
+    <div class="alert-error">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>{{ error_msg }}</span>
+    </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label" for="username">Usuario o Matrícula URC</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="ej. estudiante, cajero, admin" required autofocus>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="password">Contraseña</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn-submit">
+            <i class="bi bi-box-arrow-in-right"></i> Acceder al Sistema
+        </button>
+    </form>
+
+    <div class="roles-divider">
+        <span>Acceso Rápido por Rol (Demostración)</span>
+    </div>
+
+    <div class="quick-roles">
+        <a href="{% url 'cambiar_rol_demo' 'cliente' %}" class="role-btn">
+            <span class="role-icon">📱</span>
+            <div class="role-info">
+                <span class="role-title">Estudiante / Docente (PWA)</span>
+                <span class="role-desc">Menú anticolas, pago Mercado Pago y retiro PIN</span>
+            </div>
+            <span class="role-badge">estudiante</span>
+        </a>
+
+        <a href="{% url 'cambiar_rol_demo' 'cajero' %}" class="role-btn">
+            <span class="role-icon">💼</span>
+            <div class="role-info">
+                <span class="role-title">Cajero (Punto de Venta POS)</span>
+                <span class="role-desc">Venta en mostrador, tickets y Arqueo Ciego</span>
+            </div>
+            <span class="role-badge">cajero</span>
+        </a>
+
+        <a href="{% url 'cambiar_rol_demo' 'admin' %}" class="role-btn">
+            <span class="role-icon">👑</span>
+            <div class="role-info">
+                <span class="role-title">Administrador General</span>
+                <span class="role-desc">Inventario, auditoría de Cortes Z y catálogo</span>
+            </div>
+            <span class="role-badge">admin</span>
+        </a>
+    </div>
+
+    <div class="footer-note">
+        Universidad Rosario Castellanos • Conectado a MongoDB (<code>cafeteria</code>)
+    </div>
+</div>
+
+</body>
+</html>

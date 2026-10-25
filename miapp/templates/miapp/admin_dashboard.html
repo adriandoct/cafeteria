@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración & Auditoría | Café URC Express</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        :root {
+            --bg-base: #090e17;
+            --bg-card: rgba(19, 29, 51, 0.9);
+            --border-subtle: rgba(148, 163, 184, 0.15);
+            --border-glow: rgba(245, 158, 11, 0.4);
+            --amber: #f59e0b;
+            --emerald: #10b981;
+            --cyan: #06b6d4;
+            --blue: #3b82f6;
+            --rose: #ef4444;
+            --purple: #8b5cf6;
+            --text-title: #f8fafc;
+            --text-body: #cbd5e1;
+            --text-muted: #94a3b8;
+            --grad-accent: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+            --grad-mp: linear-gradient(135deg, #009ee3 0%, #007eb5 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-body);
+            min-height: 100vh;
+            padding-bottom: 4rem;
+        }
+
+        .navbar {
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 0.85rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+        }
+
+        .nav-container {
+            max-width: 1380px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .container {
+            max-width: 1380px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* KPI METRICS GRID */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .kpi-amber::before { background: var(--grad-accent); }
+        .kpi-mp::before { background: var(--grad-mp); }
+        .kpi-emerald::before { background: var(--emerald); }
+        .kpi-purple::before { background: var(--purple); }
+
+        .kpi-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .kpi-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .kpi-icon {
+            font-size: 1.4rem;
+            color: var(--amber);
+        }
+
+        .kpi-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--text-title);
+            margin-bottom: 0.25rem;
+        }
+
+        .kpi-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* STRATEGIC THREE PILLARS */
+        .pillars-banner {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .pillars-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-title);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .pillar-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 1.15rem;
+        }
+
+        .pillar-card h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--amber);
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .pillar-card p {
+            font-size: 0.82rem;
+            color: var(--text-body);
+            line-height: 1.4;
+        }
+
+        /* SECTIONS & TABLES */
+        .section-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-hdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .section-h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-title);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .data-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-body);
+        }
+
+        .data-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge-diff {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.78rem;
+        }
+
+        .diff-zero {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .diff-pos {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .diff-neg {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-restock {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #6ee7b7;
+            padding: 0.35rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-restock:hover {
+            background: var(--emerald);
+            color: #0f172a;
+        }
+
+        .stock-progress-bg {
+            background: rgba(255, 255, 255, 0.08);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 100px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+
+        .stock-progress-bar {
+            height: 100%;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="background:var(--grad-accent); width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#0f172a; font-size:1.2rem; font-weight:800;">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <div>
+                <h1 style="font-family:'Outfit'; font-size:1.2rem; font-weight:800; color:#fff;">Panel de Administrador General URC</h1>
+                <span style="font-size:0.72rem; color:var(--amber); font-weight:600;">Control Ejecutivo, Blindaje de Inventario y Auditoría de Cortes Z</span>
+            </div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+            <a href="{% url 'menu_cliente' %}" class="btn-restock" style="text-decoration:none; color:#fff; border-color:var(--border-subtle); background:rgba(255,255,255,0.06);">
+                <i class="bi bi-phone"></i> Menú PWA
+            </a>
+            <a href="{% url 'pantalla_kds' %}" class="btn-restock" style="text-decoration:none; color:#fff; border-color:var(--border-subtle); background:rgba(255,255,255,0.06);">
+                <i class="bi bi-display"></i> Monitor KDS
+            </a>
+            <a href="/admin/" target="_blank" class="btn-restock" style="text-decoration:none; background:var(--grad-accent); color:#0f172a; border:none;">
+                <i class="bi bi-gear-fill"></i> Django Admin (MongoDB)
+            </a>
+            <a href="{% url 'logout' %}" class="btn-restock" style="text-decoration:none; color:var(--rose); border-color:rgba(239,68,68,0.3); background:rgba(239,68,68,0.1);">
+                <i class="bi bi-box-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- KPI METRICS GRID -->
+    <div class="kpi-grid">
+        <div class="kpi-card kpi-amber">
+            <div class="kpi-header">
+                <span class="kpi-title">Facturación Total Turno</span>
+                <i class="bi bi-cash-coin kpi-icon"></i>
+            </div>
+            <div class="kpi-value">${{ total_facturado|floatformat:2 }}</div>
+            <div class="kpi-sub">Total global transaccionado en el periodo</div>
+        </div>
+
+        <div class="kpi-card kpi-mp">
+            <div class="kpi-header">
+                <span class="kpi-title">Mercado Pago (Zero-Touch)</span>
+                <i class="bi bi-wallet-fill kpi-icon" style="color: #009ee3;"></i>
+            </div>
+            <div class="kpi-value">${{ total_mp|floatformat:2 }}</div>
+            <div class="kpi-sub">Cobro 100% digital vía App / QR / SPEI</div>
+        </div>
+
+        <div class="kpi-card kpi-emerald">
+            <div class="kpi-header">
+                <span class="kpi-title">Efectivo Mostrador (POS)</span>
+                <i class="bi bi-shop kpi-icon" style="color: #10b981;"></i>
+            </div>
+            <div class="kpi-value">${{ total_efectivo|floatformat:2 }}</div>
+            <div class="kpi-sub">Ingresos auditados por arqueo ciego</div>
+        </div>
+
+        <div class="kpi-card kpi-purple">
+            <div class="kpi-header">
+                <span class="kpi-title">Impacto Reducción Fila</span>
+                <i class="bi bi-stopwatch kpi-icon" style="color: #8b5cf6;"></i>
+            </div>
+            <div class="kpi-value">&lt; 45 seg</div>
+            <div class="kpi-sub">De 14 minutos tradicionales a retiro express (-95%)</div>
+        </div>
+    </div>
+
+    <!-- STRATEGIC PILLARS (DEFENSA ANTE COMITÉ URC) -->
+    <div class="pillars-banner">
+        <div class="pillars-title">
+            <i class="bi bi-mortarboard-fill text-amber"></i> Pilares Estratégicos del Proyecto Café URC Express
+        </div>
+        <div class="pillars-grid">
+            <div class="pillar-card">
+                <h4><i class="bi bi-people-fill"></i> 1. Impacto Estudiantil Directo</h4>
+                <p>Erradica las filas de 15 minutos en recesos de 20 minutos; los alumnos ordenan antes de salir de clase y retiran con código PIN en barra en menos de 45 segundos.</p>
+            </div>
+            <div class="pillar-card">
+                <h4><i class="bi bi-shield-lock-fill"></i> 2. Blindaje Financiero y Cero Pérdidas</h4>
+                <p>Los cajeros no pueden alterar existencias físicas ni editar precios de venta. El procedimiento de arqueo ciego y la conciliación de Mercado Pago aseguran transparencia total.</p>
+            </div>
+            <div class="pillar-card">
+                <h4><i class="bi bi-diagram-3-fill"></i> 3. Escalabilidad Multi-Campus</h4>
+                <p>Arquitectura NoSQL sobre MongoDB Atlas que permite incorporar de inmediato las cafeterías de otras sedes URC (Coyoacán, Azcapotzalco, GAM) con un solo núcleo tecnológico.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INVENTARIO & ALERTAS DE STOCK BAJO (EXCLUSIVO ADMIN) -->
+    <div class="section-box">
+        <div class="section-hdr">
+            <div class="section-h2">
+                <i class="bi bi-boxes text-emerald"></i> Control y Blindaje de Inventario (Almacén Central)
+            </div>
+            <span style="font-size:0.8rem; color:var(--text-muted); background:rgba(255,255,255,0.05); padding:0.35rem 0.75rem; border-radius:8px;">
+                <i class="bi bi-lock-fill text-rose"></i> Restringido a Cajeros en UI y API
+            </span>
+        </div>
+
+        {% if alertas_stock %}
+        <div style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.3); border-radius:12px; padding:0.85rem 1.25rem; margin-bottom:1.25rem; display:flex; align-items:center; gap:0.75rem; color:#fca5a5;">
+            <i class="bi bi-exclamation-octagon-fill" style="font-size:1.4rem;"></i>
+            <div>
+                <strong>Alerta de Stock Crítico:</strong> Hay {{ alertas_stock|length }} producto(s) por debajo o igual al stock mínimo de reorden.
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>Producto</th>
+                        <th>Área Despacho</th>
+                        <th>Existencias</th>
+                        <th>Mínimo Alerta</th>
+                        <th>Estado de Stock</th>
+                        <th>Acción Administrador</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inv in inventarios %}
+                    <tr>
+                        <td><code>{{ inv.producto.sku }}</code></td>
+                        <td><strong>{{ inv.producto.nombre }}</strong></td>
+                        <td>{{ inv.producto.area_despacho }}</td>
+                        <td>
+                            <div class="stock-progress-bg">
+                                <div class="stock-progress-bar" style="width:{% if inv.stock_actual > 100 %}100{% else %}{{ inv.stock_actual }}{% endif %}%; background:{% if inv.requiere_alerta %}#ef4444{% else %}#10b981{% endif %};"></div>
+                            </div>
+                            <strong>{{ inv.stock_actual }}</strong> uds
+                        </td>
+                        <td>{{ inv.alerta_min }} uds</td>
+                        <td>
+                            {% if inv.requiere_alerta %}
+                            <span style="color:#ef4444; font-weight:700;"><i class="bi bi-exclamation-triangle-fill"></i> ¡Stock Crítico!</span>
+                            {% else %}
+                            <span style="color:#10b981; font-weight:600;"><i class="bi bi-check-circle-fill"></i> Abastecido</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn-restock" onclick="reabastecerModal('{{ inv.producto.id }}', '{{ inv.producto.nombre|escapejs }}')">
+                                <i class="bi bi-plus-circle"></i> +50 uds
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- AUDITORÍA GLOBAL DE CORTES Z (ARQUEOS CIEGOS) -->
+    <div class="section-box">
+        <div class="section-hdr">
+            <div class="section-h2">
+                <i class="bi bi-file-earmark-lock2-fill text-amber"></i> Auditoría Global de Turnos y Cortes Z
+            </div>
+            <span style="font-size:0.8rem; color:var(--text-muted);">
+                Verificación de desfasajes entre ventas registradas y conteo ciego
+            </span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Turno ID</th>
+                        <th>Cajero Operador</th>
+                        <th>Apertura</th>
+                        <th>Cierre</th>
+                        <th>Fondo Inicial</th>
+                        <th>Efectivo Sistema</th>
+                        <th>Mercado Pago</th>
+                        <th>Total Facturado</th>
+                        <th>Arqueo Ciego</th>
+                        <th>Desfasaje</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in turnos_auditoria %}
+                    <tr>
+                        <td><code>#{{ t.id|slice:":8" }}</code></td>
+                        <td>{{ t.cajero.nombre_completo|default:t.cajero.username }}</td>
+                        <td>{{ t.fecha_apertura|date:"d/m/Y H:i" }}</td>
+                        <td>{{ t.fecha_cierre|date:"d/m/Y H:i"|default:"En curso" }}</td>
+                        <td>${{ t.fondo_inicial|floatformat:2 }}</td>
+                        <td>${{ t.ventas_efectivo_sistema|floatformat:2 }}</td>
+                        <td>${{ t.ventas_mercadopago_sistema|floatformat:2 }}</td>
+                        <td><strong>${{ t.total_global_facturado|floatformat:2 }}</strong></td>
+                        <td>
+                            {% if t.efectivo_declarado %}
+                            ${{ t.efectivo_declarado|floatformat:2 }}
+                            {% else %}
+                            <i>Pendiente</i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if t.estado == 'CERRADO' %}
+                                {% if t.diferencia == 0 %}
+                                <span class="badge-diff diff-zero">$0.00 Exacto</span>
+                                {% elif t.diferencia > 0 %}
+                                <span class="badge-diff diff-pos">+${{ t.diferencia|floatformat:2 }} Sobrante</span>
+                                {% else %}
+                                <span class="badge-diff diff-neg">-${{ t.diferencia|stringformat:"f"|slice:"1:" }} Faltante</span>
+                                {% endif %}
+                            {% else %}
+                            <span style="color:var(--text-muted); font-size:0.75rem;">Arqueo Ciego Activo</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if t.estado == 'CERRADO' %}
+                            <span style="color:var(--emerald); font-weight:700;"><i class="bi bi-lock-fill"></i> Sellado</span>
+                            {% else %}
+                            <span style="color:var(--amber); font-weight:700;"><i class="bi bi-unlock-fill"></i> Abierto</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="11" style="text-align:center; color:var(--text-muted);">Sin turnos registrados todavía.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    async function reabastecerModal(productoId, nombreProd) {
+        const cantidad = prompt(`REABASTECIMIENTO DE INVENTARIO URC:\n\nProducto: ${nombreProd}\nIngresa la cantidad física a ingresar al almacén:`, "50");
+        if (!cantidad || isNaN(cantidad) || parseInt(cantidad) <= 0) return;
+
+        try {
+            const res = await fetch("{% url 'api_reabastecer_inventario' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    producto_id: productoId,
+                    cantidad: parseInt(cantidad)
+                })
+            });
+            const data = await res.json();
+            if (data.success) {
+                alert(`✅ ${data.mensaje}`);
+                window.location.reload();
+            } else {
+                alert(`⚠️ Error: ${data.error}`);
+            }
+        } catch (e) {
+            alert('Error al reabastecer: ' + e);
+        }
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+</body>
+</html>

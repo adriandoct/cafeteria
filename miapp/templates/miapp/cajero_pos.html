@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto de Venta (POS) & Arqueo Ciego | Café URC Express</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        :root {
+            --bg-base: #0a0f1d;
+            --bg-card: rgba(20, 30, 52, 0.9);
+            --border-subtle: rgba(148, 163, 184, 0.15);
+            --border-glow: rgba(245, 158, 11, 0.4);
+            --amber: #f59e0b;
+            --emerald: #10b981;
+            --cyan: #06b6d4;
+            --blue: #3b82f6;
+            --rose: #ef4444;
+            --text-title: #f8fafc;
+            --text-body: #cbd5e1;
+            --text-muted: #94a3b8;
+            --grad-accent: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .pos-header {
+            background: #111a2e;
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .pos-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .brand-badge {
+            background: var(--grad-accent);
+            color: #0f172a;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        .brand-titles h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-title);
+        }
+
+        .brand-titles span {
+            font-size: 0.72rem;
+            color: var(--amber);
+            font-weight: 600;
+        }
+
+        .shift-badge {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn-corte-z {
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+            border: none;
+            color: #ffffff;
+            padding: 0.45rem 0.95rem;
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-corte-z:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.5);
+        }
+
+        /* RBAC ALERT BANNER */
+        .rbac-alert {
+            background: rgba(239, 68, 68, 0.08);
+            border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 0.5rem 1.5rem;
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fca5a5;
+        }
+
+        .rbac-alert .rbac-tags {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .rbac-tag-blocked {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        /* POS LAYOUT */
+        .pos-container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            flex: 1;
+            height: calc(100vh - 100px);
+            overflow: hidden;
+        }
+
+        @media (max-width: 992px) {
+            .pos-container { grid-template-columns: 1fr; height: auto; }
+        }
+
+        /* CATALOG SIDE */
+        .catalog-side {
+            padding: 1.25rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .catalog-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-input {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            color: var(--text-title);
+            font-size: 0.88rem;
+            width: 260px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--amber);
+        }
+
+        .pos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 0.85rem;
+        }
+
+        .pos-item-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            user-select: none;
+        }
+
+        .pos-item-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--amber);
+            background: rgba(30, 41, 59, 0.95);
+        }
+
+        .pos-item-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text-title);
+            margin-bottom: 0.35rem;
+        }
+
+        .pos-item-cat {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .pos-item-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 0.5rem;
+        }
+
+        .pos-item-price {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fcd34d;
+        }
+
+        /* REGISTER / TICKET SIDE */
+        .register-side {
+            background: #111a2e;
+            border-left: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .register-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .register-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .reg-item {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 0.65rem 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .reg-footer {
+            padding: 1.25rem;
+            background: rgba(15, 23, 42, 0.9);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .totals-box {
+            margin-bottom: 1rem;
+        }
+
+        .tot-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .tot-row.grand-total {
+            font-size: 1.35rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            color: #ffffff;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .pay-methods-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-pay-mode {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-title);
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-pay-mode.active {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--amber);
+            color: #fcd34d;
+        }
+
+        .btn-charge {
+            width: 100%;
+            background: var(--grad-accent);
+            border: none;
+            color: #0f172a;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 0.85rem;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: transform 0.15s ease;
+        }
+
+        .btn-charge:hover {
+            transform: translateY(-2px);
+        }
+
+        /* MODAL ARQUEO CIEGO */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 15, 26, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-card {
+            background: #131d33;
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            max-width: 520px;
+            width: 100%;
+            padding: 1.75rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+        }
+
+        .arqueo-notice {
+            background: rgba(245, 158, 11, 0.12);
+            border-left: 4px solid var(--amber);
+            padding: 0.85rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #fde68a;
+            margin-bottom: 1.25rem;
+            line-height: 1.4;
+        }
+
+        .cash-input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .cash-input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-title);
+            margin-bottom: 0.45rem;
+        }
+
+        .cash-input-large {
+            width: 100%;
+            background: #0a0f1d;
+            border: 2px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 0.85rem 1rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #10b981;
+            text-align: right;
+        }
+
+        .cash-input-large:focus {
+            outline: none;
+            border-color: #10b981;
+        }
+
+        /* TICKET IMPRESO MODAL */
+        .ticket-box {
+            background: #ffffff;
+            color: #0f172a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+            margin-bottom: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- POS HEADER -->
+<header class="pos-header">
+    <div class="pos-brand">
+        <div class="brand-badge">
+            <i class="bi bi-shop"></i>
+        </div>
+        <div class="brand-titles">
+            <h1>Punto de Venta Mostrador (POS)</h1>
+            <span>Café URC Express • Universidad Rosario Castellanos</span>
+        </div>
+    </div>
+
+    <div class="shift-badge">
+        <i class="bi bi-cash-stack"></i>
+        <span>Turno: <strong>{{ turno_actual.id|default:"#01" }}</strong></span>
+        <span>| Fondo: <strong>${{ turno_actual.fondo_inicial|default:"500.00" }}</strong></span>
+    </div>
+
+    <div class="header-actions">
+        <a href="{% url 'menu_cliente' %}" class="btn-pay-mode" style="text-decoration: none;">
+            <i class="bi bi-phone"></i> Vista PWA Alumno
+        </a>
+        <a href="{% url 'pantalla_kds' %}" class="btn-pay-mode" style="text-decoration: none;">
+            <i class="bi bi-display"></i> Monitor KDS
+        </a>
+        <button class="btn-corte-z" onclick="abrirModalArqueoCiego()">
+            <i class="bi bi-file-earmark-lock2-fill"></i> Corte Z (Arqueo Ciego)
+        </button>
+        <a href="{% url 'logout' %}" class="btn-pay-mode" style="text-decoration: none;">
+            <i class="bi bi-box-arrow-right"></i>
+        </a>
+    </div>
+</header>
+
+<!-- RBAC COMPLIANCE BANNER -->
+<div class="rbac-alert">
+    <div>
+        <i class="bi bi-shield-lock-fill"></i> <strong>Política de Seguridad RBAC Operativa:</strong>
+        El Cajero cuenta con privilegios para registrar ventas y cobrar en mostrador.
+    </div>
+    <div class="rbac-tags">
+        <span class="rbac-tag-blocked">Inventario: Bloqueado</span>
+        <span class="rbac-tag-blocked">Precios: Bloqueado</span>
+    </div>
+</div>
+
+<!-- POS INTERFACE -->
+<div class="pos-container">
+
+    <!-- CATALOG SIDE -->
+    <div class="catalog-side">
+        <div class="catalog-header">
+            <h2 style="font-family:'Outfit'; font-size:1.15rem; color:var(--text-title);">
+                <i class="bi bi-grid-3x3-gap-fill text-amber"></i> Catálogo Rápido de Mostrador
+            </h2>
+            <input type="text" id="filtroPos" class="search-input" placeholder="Buscar por producto..." onkeyup="filtrarCatalogoPos()">
+        </div>
+
+        <div class="pos-grid" id="posGridContainer">
+            {% for p in productos %}
+            <div class="pos-item-card" onclick="agregarAlTicket('{{ p.id }}', '{{ p.nombre|escapejs }}', {{ p.precio_venta }}, '{{ p.area_despacho }}')">
+                <div>
+                    <div style="font-size: 0.72rem; color: var(--amber); font-weight: 700; margin-bottom: 0.2rem;">
+                        {{ p.sku }}
+                    </div>
+                    <div class="pos-item-name">{{ p.nombre }}</div>
+                    <div class="pos-item-cat">{{ p.categoria }} • {{ p.area_despacho }}</div>
+                </div>
+                <div class="pos-item-bottom">
+                    <span class="pos-item-price">${{ p.precio_venta|floatformat:2 }}</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);"><i class="bi bi-plus-lg"></i></span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- REGISTER / TICKET SIDE -->
+    <div class="register-side">
+        <div class="register-header">
+            <h3 style="font-family:'Outfit'; font-size:1.1rem; color:#fff;">
+                <i class="bi bi-receipt"></i> Comanda Presencial
+            </h3>
+            <button onclick="limpiarTicket()" style="background:transparent; border:none; color:var(--rose); font-size:0.8rem; cursor:pointer;">
+                <i class="bi bi-trash"></i> Vaciar
+            </button>
+        </div>
+
+        <div class="register-items" id="ticketItemsContainer">
+            <div style="text-align: center; color: var(--text-muted); margin-top: 4rem;">
+                <i class="bi bi-cart3" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;"></i>
+                Haz clic en los productos para agregarlos a la venta.
+            </div>
+        </div>
+
+        <div class="reg-footer">
+            <div class="totals-box">
+                <div class="tot-row">
+                    <span>Ítems agregados:</span>
+                    <span id="ticketCount">0 uds</span>
+                </div>
+                <div class="tot-row grand-total">
+                    <span>Total a Cobrar:</span>
+                    <span id="ticketTotal" style="color: #fcd34d;">$0.00</span>
+                </div>
+            </div>
+
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 600;">
+                Método de Cobro Presencial:
+            </div>
+            <div class="pay-methods-grid">
+                <button type="button" class="btn-pay-mode active" id="btnPayEfectivo" onclick="setMetodoCobro('EFECTIVO_CAJA', this)">
+                    <i class="bi bi-cash"></i> Efectivo
+                </button>
+                <button type="button" class="btn-pay-mode" id="btnPayTPV" onclick="setMetodoCobro('TARJETA_TPV', this)">
+                    <i class="bi bi-credit-card"></i> Terminal TPV
+                </button>
+            </div>
+
+            <button class="btn-charge" onclick="cobrarVentaPresencial()">
+                <i class="bi bi-printer-fill"></i> Cobrar y Emitir Ticket con PIN
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- MODAL ARQUEO CIEGO (CORTE Z) -->
+<div class="modal-overlay" id="modalArqueoCiego">
+    <div class="modal-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h3 style="font-family:'Outfit'; font-size:1.3rem; color:#fff;">
+                <i class="bi bi-lock-fill text-rose"></i> Procedimiento de Arqueo Ciego
+            </h3>
+            <button onclick="cerrarModalArqueoCiego()" style="background:transparent; border:none; color:var(--text-muted); font-size:1.4rem; cursor:pointer;">&times;</button>
+        </div>
+
+        <div class="arqueo-notice">
+            <i class="bi bi-eye-slash-fill"></i> <strong>Auditoría Ciega de Caja:</strong><br>
+            El sistema <strong>no muestra el efectivo acumulado en pantalla</strong> para prevenir desvíos y cuadres adulterados. Cuenta físicamente todo el efectivo en el cajón de dinero e introduce el importe total.
+        </div>
+
+        <div class="cash-input-group">
+            <label for="efectivoContado">Efectivo Físico Contado ($ MXN):</label>
+            <input type="number" step="0.50" id="efectivoContado" class="cash-input-large" placeholder="0.00" autofocus>
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+            <label style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:0.35rem; color:var(--text-body);">
+                Observaciones de Cierre (Opcional):
+            </label>
+            <input type="text" id="arqueoObs" placeholder="ej. Billetes de alta denominación, cambio suficiente..."
+                   style="width:100%; background:#0a0f1d; border:1px solid var(--border-subtle); padding:0.65rem; border-radius:8px; color:#fff; font-size:0.85rem;">
+        </div>
+
+        <button onclick="enviarArqueoCiego()" class="btn-charge" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color:#fff;">
+            <i class="bi bi-check2-all"></i> Cerrar Turno y Revelar Póliza Z
+        </button>
+    </div>
+</div>
+
+<!-- MODAL RESULTADO CORTE Z -->
+<div class="modal-overlay" id="modalPolizaZ">
+    <div class="modal-card" style="max-width: 480px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h3 style="font-family:'Outfit'; font-size:1.2rem; color:#fff;">
+                <i class="bi bi-file-earmark-check-fill text-emerald"></i> Póliza de Corte Z Consolidada
+            </h3>
+            <button onclick="cerrarModalPolizaZ()" style="background:transparent; border:none; color:var(--text-muted); font-size:1.4rem; cursor:pointer;">&times;</button>
+        </div>
+
+        <div class="ticket-box" id="polizaTicketContent">
+            <!-- Renderizado dinámico de la póliza -->
+        </div>
+
+        <button onclick="cerrarModalPolizaZ()" class="btn-charge" style="background:#0ea5e9; color:#fff;">
+            <i class="bi bi-check-circle"></i> Aceptar y Finalizar
+        </button>
+    </div>
+</div>
+
+<script>
+    let ticketItems = [];
+    let metodoCobroSeleccionado = 'EFECTIVO_CAJA';
+
+    function setMetodoCobro(metodo, btn) {
+        metodoCobroSeleccionado = metodo;
+        document.querySelectorAll('.btn-pay-mode').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function agregarAlTicket(id, nombre, precio, area) {
+        const itemExistente = ticketItems.find(it => it.id === id);
+        if (itemExistente) {
+            itemExistente.cantidad += 1;
+        } else {
+            ticketItems.push({
+                id: id,
+                nombre: nombre,
+                precio: parseFloat(precio),
+                area: area,
+                cantidad: 1,
+                notas: ''
+            });
+        }
+        renderizarTicket();
+    }
+
+    function renderizarTicket() {
+        const cont = document.getElementById('ticketItemsContainer');
+        cont.innerHTML = '';
+        let total = 0;
+        let count = 0;
+
+        if (ticketItems.length === 0) {
+            cont.innerHTML = `
+                <div style="text-align: center; color: var(--text-muted); margin-top: 4rem;">
+                    <i class="bi bi-cart3" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;"></i>
+                    Haz clic en los productos para agregarlos a la comanda.
+                </div>
+            `;
+        } else {
+            ticketItems.forEach((it, idx) => {
+                const sub = it.precio * it.cantidad;
+                total += sub;
+                count += it.cantidad;
+
+                const row = document.createElement('div');
+                row.className = 'reg-item';
+                row.innerHTML = `
+                    <div>
+                        <div style="font-weight:700; font-size:0.88rem; color:#fff;">${it.nombre}</div>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">$${it.precio.toFixed(2)} c/u</div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:0.5rem;">
+                        <button onclick="modificarCantidadTicket(${idx}, -1)" style="background:rgba(255,255,255,0.1); border:none; color:#fff; width:22px; height:22px; border-radius:4px; cursor:pointer;">-</button>
+                        <span style="font-weight:700; font-size:0.85rem;">${it.cantidad}</span>
+                        <button onclick="modificarCantidadTicket(${idx}, 1)" style="background:rgba(255,255,255,0.1); border:none; color:#fff; width:22px; height:22px; border-radius:4px; cursor:pointer;">+</button>
+                        <span style="font-weight:800; font-size:0.9rem; color:#fcd34d; margin-left:0.5rem;">$${sub.toFixed(2)}</span>
+                    </div>
+                `;
+                cont.appendChild(row);
+            });
+        }
+
+        document.getElementById('ticketCount').innerText = `${count} uds`;
+        document.getElementById('ticketTotal').innerText = `$${total.toFixed(2)}`;
+    }
+
+    function modificarCantidadTicket(idx, delta) {
+        ticketItems[idx].cantidad += delta;
+        if (ticketItems[idx].cantidad <= 0) {
+            ticketItems.splice(idx, 1);
+        }
+        renderizarTicket();
+    }
+
+    function limpiarTicket() {
+        ticketItems = [];
+        renderizarTicket();
+    }
+
+    function filtrarCatalogoPos() {
+        const q = document.getElementById('filtroPos').value.toLowerCase();
+        document.querySelectorAll('.pos-item-card').forEach(card => {
+            const texto = card.innerText.toLowerCase();
+            card.style.display = texto.includes(q) ? 'flex' : 'none';
+        });
+    }
+
+    // COBRAR VENTA EN MOSTRADOR
+    async function cobrarVentaPresencial() {
+        if (ticketItems.length === 0) {
+            alert('Agrega productos a la comanda antes de cobrar.');
+            return;
+        }
+
+        try {
+            const res = await fetch("{% url 'api_procesar_venta_mostrador' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    items: ticketItems,
+                    metodo_pago: metodoCobroSeleccionado,
+                    nombre_cliente: 'Cliente Mostrador'
+                })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                alert(`✅ VENTA COBRADA EXITOSAMENTE\n\nNúmero de Turno: ${data.order_number}\nCÓDIGO PIN DE RETIRO: ${data.codigo_pin}\nTotal: $${data.total.toFixed(2)} MXN\nDespacho: ${data.tipo_despacho}\n\nEntrega el PIN al alumno.`);
+                limpiarTicket();
+            } else {
+                alert('Error al procesar venta: ' + data.error);
+            }
+        } catch (err) {
+            alert('Error de conexión: ' + err);
+        }
+    }
+
+    // MODAL ARQUEO CIEGO
+    function abrirModalArqueoCiego() {
+        document.getElementById('efectivoContado').value = '';
+        document.getElementById('arqueoObs').value = '';
+        document.getElementById('modalArqueoCiego').style.display = 'flex';
+    }
+
+    function cerrarModalArqueoCiego() {
+        document.getElementById('modalArqueoCiego').style.display = 'none';
+    }
+
+    // ENVIAR ARQUEO CIEGO Y REVELAR PÓLIZA Z
+    async function enviarArqueoCiego() {
+        const monto = document.getElementById('efectivoContado').value;
+        if (!monto || parseFloat(monto) < 0) {
+            alert('Por favor ingresa el monto de efectivo físico contado.');
+            return;
+        }
+
+        const obs = document.getElementById('arqueoObs').value;
+
+        try {
+            const res = await fetch("{% url 'api_cierre_arqueo_ciego' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    efectivo_declarado: monto,
+                    observaciones: obs
+                })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                cerrarModalArqueoCiego();
+
+                let colorDiff = data.diferencia === 0 ? 'green' : (data.diferencia > 0 ? 'blue' : 'red');
+                let estadoDiff = data.diferencia === 0 ? 'CUADRE EXACTO ($0.00)' : (data.diferencia > 0 ? `SOBRANTE (+$${data.diferencia.toFixed(2)})` : `FALTANTE (-$${Math.abs(data.diferencia).toFixed(2)})`);
+
+                document.getElementById('polizaTicketContent').innerHTML = `
+                    <div style="text-align:center; font-weight:bold; font-size:1rem; margin-bottom:0.5rem;">
+                        UNIVERSIDAD ROSARIO CASTELLANOS<br>
+                        CAFÉ URC EXPRESS - CORTE DE CAJA Z
+                    </div>
+                    <div>----------------------------------------</div>
+                    <div>Fecha Apertura: ${data.fecha_apertura}</div>
+                    <div>Fecha Cierre:   ${data.fecha_cierre}</div>
+                    <div>Cajero Turno:   {{ request.user.get_full_name|default:request.user.username }}</div>
+                    <div>----------------------------------------</div>
+                    <div>Fondo de Cambio Inicial:   $${data.fondo_inicial.toFixed(2)} MXN</div>
+                    <div>Ventas Efectivo Mostrador: $${data.ventas_efectivo_sistema.toFixed(2)} MXN</div>
+                    <div>Total Efectivo Esperado:   $${data.total_esperado_caja.toFixed(2)} MXN</div>
+                    <div>Ventas Mercado Pago (App): $${data.ventas_mp_sistema.toFixed(2)} MXN</div>
+                    <div>----------------------------------------</div>
+                    <div style="font-weight:bold;">TOTAL FACTURADO TURNO:    $${data.total_global_facturado.toFixed(2)} MXN</div>
+                    <div>----------------------------------------</div>
+                    <div>ARQUEO CIEGO DECLARADO:    $${data.efectivo_declarado.toFixed(2)} MXN</div>
+                    <div style="font-weight:bold; color:${colorDiff}; margin-top:0.35rem;">
+                        DESFASAJE DE CAJA:         ${estadoDiff}
+                    </div>
+                    <div>----------------------------------------</div>
+                    <div style="text-align:center; font-size:0.75rem; margin-top:0.5rem;">
+                        INVENTARIO BLOQUEADO A CAJEROS<br>POLIZA SELLADA BAJO NORMATIVA URC
+                    </div>
+                `;
+
+                document.getElementById('modalPolizaZ').style.display = 'flex';
+            } else {
+                alert('Error al cerrar corte: ' + data.error);
+            }
+        } catch (err) {
+            alert('Error de conexión: ' + err);
+        }
+    }
+
+    function cerrarModalPolizaZ() {
+        document.getElementById('modalPolizaZ').style.display = 'none';
+        window.location.reload();
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+</body>
+</html>
