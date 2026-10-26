@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_mongodb_backend',
-        'HOST': os.environ.get('MONGODB_URI') or os.environ.get('MONGO_URL') or 'mongodb://localhost:27017/',
+        'HOST': os.environ.get('MONGODB_URI') or os.environ.get('MONGO_URL') or 'mongodb+srv://admin_cafeteria:12345678Rosario@cluster1.dzghhn4.mongodb.net/cafeteria?retryWrites=true&w=majority',
         'NAME': os.environ.get('MONGODB_NAME', 'cafeteria'),
     },
 }
