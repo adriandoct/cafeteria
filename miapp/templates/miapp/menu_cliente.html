@@ -384,116 +384,175 @@
             box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
         }
 
-        /* PRODUCTS GRID */
+        /* PRODUCTS GRID & BIG EYE-CATCHING FOOD CARDS */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
         }
 
         .product-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-radius: 18px;
-            padding: 1.25rem;
+            border-radius: 20px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
         }
 
         .product-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--border-glow);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+            transform: translateY(-6px);
+            border-color: rgba(245, 158, 11, 0.55);
+            box-shadow: 0 16px 36px rgba(245, 158, 11, 0.18), 0 22px 45px rgba(0, 0, 0, 0.55);
         }
 
-        .card-top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 0.85rem;
+        /* LARGE PRODUCT IMAGE BANNER */
+        .product-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: #0d1527;
+            overflow: hidden;
         }
 
-        .product-icon {
-            font-size: 2.25rem;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 14px;
-            width: 54px;
-            height: 54px;
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.08);
+        }
+
+        .product-img-fallback {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid var(--border-subtle);
+            font-size: 3.8rem;
+            background: radial-gradient(circle at center, rgba(245, 158, 11, 0.15) 0%, #0d1527 80%);
+        }
+
+        .product-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.25) 0%, rgba(15, 23, 42, 0) 45%, rgba(19, 29, 51, 0.95) 100%);
+            pointer-events: none;
+        }
+
+        .img-badge-top {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
         }
 
         .routing-badge {
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            padding: 0.25rem 0.6rem;
+            padding: 0.3rem 0.65rem;
             border-radius: 9999px;
             display: inline-flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.35rem;
             text-transform: uppercase;
             letter-spacing: 0.04em;
+            backdrop-filter: blur(8px);
         }
 
         .badge-express {
-            background: rgba(6, 182, 212, 0.15);
+            background: rgba(6, 182, 212, 0.3);
             color: #38bdf8;
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            border: 1px solid rgba(56, 189, 248, 0.5);
+            box-shadow: 0 2px 10px rgba(6, 182, 212, 0.35);
         }
 
         .badge-cocina {
-            background: rgba(245, 158, 11, 0.15);
+            background: rgba(245, 158, 11, 0.3);
             color: #fbbf24;
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.35);
+        }
+
+        .time-pill-floating {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(8px);
+            border-radius: 9999px;
+            padding: 0.28rem 0.65rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        /* CARD CONTENT BODY */
+        .product-body {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .product-cat-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--amber);
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
         }
 
         .product-name {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-title);
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.4rem;
             line-height: 1.3;
         }
 
         .product-desc {
-            font-size: 0.82rem;
+            font-size: 0.84rem;
             color: var(--text-muted);
-            margin-bottom: 1rem;
-            line-height: 1.4;
+            margin-bottom: 1.25rem;
+            line-height: 1.45;
             flex-grow: 1;
-        }
-
-        .time-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 6px;
-            padding: 0.2rem 0.5rem;
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            margin-bottom: 0.85rem;
         }
 
         .card-bottom {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-top: 0.85rem;
+            padding-top: 1rem;
             border-top: 1px solid var(--border-subtle);
+            gap: 0.75rem;
         }
 
         .product-price {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: var(--text-title);
         }
@@ -505,26 +564,88 @@
         }
 
         .btn-add {
-            background: rgba(245, 158, 11, 0.15);
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            color: #fcd34d;
-            padding: 0.45rem 0.9rem;
-            border-radius: 10px;
+            background: var(--grad-accent);
+            border: none;
+            color: #0f172a;
+            padding: 0.55rem 1.05rem;
+            border-radius: 12px;
             font-family: 'Outfit', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.4rem;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
         }
 
         .btn-add:hover {
-            background: var(--amber);
-            color: #0f172a;
-            transform: scale(1.03);
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(245, 158, 11, 0.5);
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+
+        /* MODAL PRODUCT HERO BANNER */
+        .modal-banner {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+            background: #0d1527;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .modal-banner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(15, 23, 42, 0.85) 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 0.85rem 1rem;
+        }
+
+        .modal-banner-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #fcd34d;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            backdrop-filter: blur(8px);
+        }
+
+        /* CART THUMBNAIL */
+        .cart-item-thumb {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .cart-item-emoji {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            flex-shrink: 0;
         }
 
         /* LIVE ORDER TRACKER SECTION */
@@ -1111,36 +1232,52 @@
     <div class="products-grid" id="productsGrid">
         {% for p in productos %}
         <div class="product-card" data-area="{{ p.area_despacho|lower }}" data-grab="{{ p.es_grab_and_go }}">
-            <div>
-                <div class="card-top">
-                    <div class="product-icon">
-                        {{ p.imagen_url|default:"🥪" }}
-                    </div>
+            <!-- HERO IMAGE & BADGES -->
+            <div class="product-img-wrap">
+                {% if p.imagen_url and "http" in p.imagen_url %}
+                    <img src="{{ p.imagen_url }}" alt="{{ p.nombre }}" class="product-img" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-img-fallback" style="display: none;">🥪</div>
+                {% else %}
+                    <div class="product-img-fallback">{{ p.imagen_url|default:"🥪" }}</div>
+                {% endif %}
+                
+                <div class="product-img-overlay"></div>
+
+                <div class="img-badge-top">
                     {% if p.es_grab_and_go %}
                     <span class="routing-badge badge-express">
-                        <i class="bi bi-lightning-fill"></i> Grab & Go
+                        <i class="bi bi-lightning-fill"></i> Grab & Go (&lt; 30s)
                     </span>
                     {% else %}
                     <span class="routing-badge badge-cocina">
                         <i class="bi bi-fire"></i> Plancha / Cocina
                     </span>
                     {% endif %}
-                </div>
 
-                <h3 class="product-name">{{ p.nombre }}</h3>
-                <div class="time-pill">
-                    <i class="bi bi-stopwatch"></i> Prep: {{ p.tiempo_prep_min }}
+                    <span class="time-pill-floating">
+                        <i class="bi bi-stopwatch"></i> {{ p.tiempo_prep_min }}
+                    </span>
                 </div>
-                <p class="product-desc">{{ p.descripcion }}</p>
             </div>
 
-            <div class="card-bottom">
-                <div class="product-price">
-                    ${{ p.precio_venta|floatformat:2 }} <span>MXN</span>
+            <!-- PRODUCT INFO & ACTIONS -->
+            <div class="product-body">
+                <div>
+                    <div class="product-cat-tag">
+                        <i class="bi bi-tag-fill"></i> {{ p.categoria }}
+                    </div>
+                    <h3 class="product-name">{{ p.nombre }}</h3>
+                    <p class="product-desc">{{ p.descripcion }}</p>
                 </div>
-                <button class="btn-add" onclick="abrirModalPersonalizar('{{ p.id }}')">
-                    <i class="bi bi-plus-circle-fill"></i> Agregar
-                </button>
+
+                <div class="card-bottom">
+                    <div class="product-price">
+                        ${{ p.precio_venta|floatformat:2 }} <span>MXN</span>
+                    </div>
+                    <button class="btn-add" onclick="abrirModalPersonalizar('{{ p.id }}')">
+                        <i class="bi bi-plus-circle-fill"></i> Agregar
+                    </button>
+                </div>
             </div>
         </div>
         {% endfor %}
@@ -1157,6 +1294,14 @@
                 <span id="modalProdPrecio" style="color: var(--amber); font-weight: 700; font-size: 0.95rem;"></span>
             </div>
             <button class="modal-close" onclick="cerrarModalPersonalizar()">&times;</button>
+        </div>
+
+        <!-- MODAL FOOD HERO BANNER -->
+        <div class="modal-banner" id="modalProdBanner" style="display: none;">
+            <img id="modalProdImg" src="" alt="Producto" class="modal-banner-img">
+            <div class="modal-banner-overlay">
+                <span class="modal-banner-badge" id="modalProdBadge"></span>
+            </div>
         </div>
 
         <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">
@@ -1320,6 +1465,18 @@
         document.getElementById('modalProdPrecio').innerText = `$${productoSeleccionado.precio_venta.toFixed(2)} MXN`;
         document.getElementById('modalNotasLibres').value = '';
 
+        // Dynamic Food Hero Banner in Modal
+        const banner = document.getElementById('modalProdBanner');
+        const img = document.getElementById('modalProdImg');
+        const badge = document.getElementById('modalProdBadge');
+        if (productoSeleccionado.imagen_url && productoSeleccionado.imagen_url.includes('http')) {
+            banner.style.display = 'block';
+            img.src = productoSeleccionado.imagen_url;
+            badge.innerText = productoSeleccionado.area_despacho === 'Cocina' ? '🍳 Preparación en Plancha / Cocina' : '⚡ Despacho Express Grab & Go';
+        } else {
+            banner.style.display = 'none';
+        }
+
         const chipsCont = document.getElementById('modalChips');
         chipsCont.innerHTML = '';
 
@@ -1367,6 +1524,7 @@
                 nombre: productoSeleccionado.nombre,
                 precio: productoSeleccionado.precio_venta,
                 area: productoSeleccionado.area_despacho,
+                imagen_url: productoSeleccionado.imagen_url,
                 cantidad: 1,
                 notas: notasFinales
             });
@@ -1397,13 +1555,20 @@
                 total += sub;
                 count += it.cantidad;
 
+                const thumbHtml = (it.imagen_url && it.imagen_url.includes('http'))
+                    ? `<img src="${it.imagen_url}" alt="${it.nombre}" class="cart-item-thumb">`
+                    : `<div class="cart-item-emoji">${it.imagen_url || '🥪'}</div>`;
+
                 const el = document.createElement('div');
                 el.className = 'cart-item';
                 el.innerHTML = `
-                    <div class="item-info">
-                        <h4>${it.nombre}</h4>
-                        <div style="font-size: 0.8rem; color: var(--text-muted);">$${it.precio.toFixed(2)} c/u</div>
-                        ${it.notas ? `<div class="item-notes"><i class="bi bi-chat-dots"></i> ${it.notas}</div>` : ''}
+                    <div style="display: flex; gap: 0.75rem; align-items: center; flex: 1;">
+                        ${thumbHtml}
+                        <div class="item-info">
+                            <h4>${it.nombre}</h4>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">$${it.precio.toFixed(2)} c/u</div>
+                            ${it.notas ? `<div class="item-notes"><i class="bi bi-chat-dots"></i> ${it.notas}</div>` : ''}
+                        </div>
                     </div>
                     <div class="qty-controls">
                         <button class="qty-btn" onclick="cambiarCantidad(${idx}, -1)">-</button>

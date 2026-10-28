@@ -262,6 +262,7 @@ def modulo_cajero(request):
             'tiempo_prep': p.tiempo_prep,
             'area_despacho': p.area_despacho,
             'stock': stock_dict.get(p.id, 0),
+            'imagen_url': p.imagen_url,
             'opciones': p.opciones_personalizables or []
         })
 

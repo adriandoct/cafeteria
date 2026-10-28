@@ -503,12 +503,19 @@
         <div class="pos-grid" id="posGridContainer">
             {% for p in productos %}
             <div class="pos-item-card" onclick="agregarAlTicket('{{ p.id }}', '{{ p.nombre|escapejs }}', {{ p.precio_venta }}, '{{ p.area_despacho }}')">
-                <div>
-                    <div style="font-size: 0.72rem; color: var(--amber); font-weight: 700; margin-bottom: 0.2rem;">
-                        {{ p.sku }}
+                <div style="display: flex; gap: 0.65rem; align-items: flex-start;">
+                    {% if p.imagen_url and "http" in p.imagen_url %}
+                    <img src="{{ p.imagen_url }}" alt="{{ p.nombre }}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover; flex-shrink: 0; border: 1px solid var(--border-subtle);">
+                    {% else %}
+                    <div style="width: 44px; height: 44px; border-radius: 8px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">{{ p.imagen_url|default:"🥪" }}</div>
+                    {% endif %}
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-size: 0.7rem; color: var(--amber); font-weight: 700; margin-bottom: 0.15rem;">
+                            {{ p.sku }}
+                        </div>
+                        <div class="pos-item-name" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ p.nombre }}</div>
+                        <div class="pos-item-cat">{{ p.categoria }} • {{ p.area_despacho }}</div>
                     </div>
-                    <div class="pos-item-name">{{ p.nombre }}</div>
-                    <div class="pos-item-cat">{{ p.categoria }} • {{ p.area_despacho }}</div>
                 </div>
                 <div class="pos-item-bottom">
                     <span class="pos-item-price">${{ p.precio_venta|floatformat:2 }}</span>
